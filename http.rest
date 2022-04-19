@@ -1,11 +1,24 @@
 GET http://localhost:3000/api/users
 ###
+GET http://localhost:3000/api/book
+###
 POST http://localhost:3000/api/book
 Content-Type: application/json
 
 {
-  "title": "Book 2",
-  "year": 2010,
-  "rating": 2
+  "title": "Book 4",
+  "year": 2015,
+  "rating": 1
+}
+
+###
+
+POST http://localhost:3000/api/author
+Content-Type: application/json
+
+{
+  "Name": "James book1",
+  "town": "London",
+  "bookId": "625e64ccf0309fcf5bcd6df4"
 }
 ###

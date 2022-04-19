@@ -27,4 +27,26 @@ booksRoutes.post('/book', async (req, res) => {
   }
 });
 
+// GET /api/book/ - grazina visas knygas
+booksRoutes.get('/book', async (req, res) => {
+  try {
+    // prisijungti
+    await dbClient.connect();
+    // atlikti veiksma
+    console.log('connected');
+    // gauti visas knygas
+    const collection = dbClient.db('library').collection('books');
+    const allBooksArr = await collection.find().toArray();
+    res.status(200).json(allBooksArr);
+  } catch (error) {
+    console.error('error in getting all books', error);
+    res.status(500).json('something is wrong');
+  } finally {
+    // uzdaryti prisijungima
+    await dbClient.close();
+  }
+});
+
+// GET /api/book/:bookId - grazina knyga su id lygiu bookId
+
 module.exports = booksRoutes;
