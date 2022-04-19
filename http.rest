@@ -17,8 +17,8 @@ POST http://localhost:3000/api/author
 Content-Type: application/json
 
 {
-  "Name": "James book1",
-  "town": "London",
-  "bookId": "625e64ccf0309fcf5bcd6df4"
+  "name": "Jannet book3",
+  "town": "Vilnius",
+  "bookId": "625e6550f0309fcf5bcd6df6"
 }
 ###
