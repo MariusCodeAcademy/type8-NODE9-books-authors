@@ -22,3 +22,10 @@ Content-Type: application/json
   "bookId": "625e6550f0309fcf5bcd6df6"
 }
 ###
+
+###
+
+GET http://localhost:3000/api/author
+###
+
+GET http://localhost:3000/api/book-authors

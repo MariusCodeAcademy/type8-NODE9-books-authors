@@ -34,7 +34,22 @@ authorRoutes.post('/author', async (req, res) => {
 
 // GET /api/author - gauti visus autorius
 authorRoutes.get('/author', async (req, res) => {
-  res.json('authors index');
+  try {
+    // prisijungti
+    await dbClient.connect();
+    // atlikti veiksma
+    console.log('connected');
+    // gauti visas knygas
+    const collection = dbClient.db('library').collection('authors');
+    const allAuthorsArr = await collection.find().toArray();
+    res.status(200).json(allAuthorsArr);
+  } catch (error) {
+    console.error('error in getting all authors', error);
+    res.status(500).json('something is wrong');
+  } finally {
+    // uzdaryti prisijungima
+    await dbClient.close();
+  }
 });
 
 // GET /api/author/:authorId - gauti konkretu autoriu
