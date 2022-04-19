@@ -1,0 +1,11 @@
+GET http://localhost:3000/api/users
+###
+POST http://localhost:3000/api/book
+Content-Type: application/json
+
+{
+  "title": "Book 2",
+  "year": 2010,
+  "rating": 2
+}
+###
