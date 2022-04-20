@@ -1,14 +1,21 @@
 GET http://localhost:3000/api/users
 ###
 GET http://localhost:3000/api/book
+
+#### single book
+GET http://localhost:3000/api/book/625fb4d285b686ea00ffb795
 ###
+#### delete book
+DELETE http://localhost:3000/api/book/625fb4d285b686ea00ffb795
+###
+
 POST http://localhost:3000/api/book
 Content-Type: application/json
 
 {
-  "title": "Book 4",
+  "title": "Book 15",
   "year": 2015,
-  "rating": 1
+  "rating": 3
 }
 
 ###

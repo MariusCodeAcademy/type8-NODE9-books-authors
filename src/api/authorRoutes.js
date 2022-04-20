@@ -52,6 +52,6 @@ authorRoutes.get('/author', async (req, res) => {
   }
 });
 
-// GET /api/author/:gauti konkretu autoriu
+// GET /api/author/:authorId    gauti konkretu autoriu
 
 module.exports = authorRoutes;

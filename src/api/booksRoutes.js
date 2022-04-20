@@ -1,4 +1,5 @@
 const express = require('express');
+const { ObjectId } = require('mongodb');
 const { dbClient } = require('../config');
 
 const booksRoutes = express.Router();
@@ -142,5 +143,42 @@ booksRoutes.get('/book-authors', async (req, res) => {
 });
 
 // GET /api/book/:bookId - grazina knyga su id lygiu bookId
+booksRoutes.get('/book/:bookId', async (req, res) => {
+  try {
+    const { bookId } = req.params;
+    await dbClient.connect();
+    // gauti knyga kurios id yra === bookId
+    const collection = dbClient.db('library').collection('books');
+    const foundBook = await collection.findOne(ObjectId(bookId));
+    console.log('foundBook ===', foundBook);
+    res.status(200).json(foundBook);
+  } catch (error) {
+    console.error('error in getting single book', error);
+    res.status(500).json('something is wrong');
+  } finally {
+    // uzdaryti prisijungima
+    await dbClient.close();
+  }
+});
+
+// DELETE /api/book/:delBookId - istrinam knyga kurios id === delBookId
+booksRoutes.delete('/book/:delBookId', async (req, res) => {
+  try {
+    const { delBookId } = req.params;
+    await dbClient.connect();
+    // gauti knyga kurios id yra === bookId
+    const collection = dbClient.db('library').collection('books');
+    const deleteResult = await collection.deleteOne({ _id: ObjectId(delBookId) });
+    console.log('deleteResult ===', deleteResult);
+    res.status(200).json(deleteResult);
+  } catch (error) {
+    console.error('error in deleting single book', error);
+    res.status(500).json('something is wrong');
+  } finally {
+    // uzdaryti prisijungima
+    await dbClient.close();
+  }
+});
+// deleteOne({filterObj})
 
 module.exports = booksRoutes;
