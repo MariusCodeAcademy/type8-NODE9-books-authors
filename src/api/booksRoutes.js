@@ -46,6 +46,56 @@ booksRoutes.get('/book', async (req, res) => {
     await dbClient.close();
   }
 });
+booksRoutes.get('/book-agg2', async (req, res) => {
+  try {
+    const aggPipeline = [
+      {
+        $lookup: {
+          from: 'authors',
+          localField: '_id',
+          foreignField: 'bookId',
+          as: 'bookAuthorArr',
+        },
+      },
+      {
+        $sort: {
+          rating: -1,
+        },
+      },
+      {
+        $replaceRoot: {
+          newRoot: {
+            $mergeObjects: [
+              {
+                $arrayElemAt: ['$bookAuthorArr', 0],
+              },
+              '$$ROOT',
+            ],
+          },
+        },
+      },
+      {
+        $project: {
+          bookAuthorArr: 0,
+        },
+      },
+    ];
+    // prisijungti
+    await dbClient.connect();
+    // atlikti veiksma
+    console.log('connected');
+    // gauti visas knygas
+    const collection = dbClient.db('library').collection('books');
+    const allBooksArr = await collection.aggregate(aggPipeline).toArray();
+    res.status(200).json(allBooksArr);
+  } catch (error) {
+    console.error('error in getting all books', error);
+    res.status(500).json('something is wrong');
+  } finally {
+    // uzdaryti prisijungima
+    await dbClient.close();
+  }
+});
 // GET /api/book-authors - grazina visas knygas
 booksRoutes.get('/book-authors', async (req, res) => {
   try {
