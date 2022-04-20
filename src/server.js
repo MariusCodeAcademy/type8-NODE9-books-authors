@@ -1,5 +1,6 @@
 const express = require('express');
 const morgan = require('morgan');
+const cors = require('cors');
 const authorRoutes = require('./api/authorRoutes');
 const booksRoutes = require('./api/booksRoutes');
 const userRoutes = require('./api/usersRoutes');
@@ -10,6 +11,7 @@ const app = express();
 // Global MiddleWare
 app.use(morgan('dev'));
 app.use(express.json());
+app.use(cors());
 
 app.get('/', (req, res) => res.json('OK'));
 

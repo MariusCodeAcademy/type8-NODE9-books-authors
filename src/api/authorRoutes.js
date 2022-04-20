@@ -64,9 +64,12 @@ authorRoutes.patch('/author/:authorId', async (req, res) => {
     await dbClient.connect();
     // atlikti veiksma
     console.log('connected');
-    // gauti visas knygas
+    // atnaujinti varda
     const collection = dbClient.db('library').collection('authors');
-    const updateRezult = await collection.updateOne({}, {});
+    const updateRezult = await collection.updateOne(
+      { _id: ObjectId(authorId) },
+      { $set: { name: newName } }
+    );
     res.status(200).json(updateRezult);
   } catch (error) {
     console.error('error in updating author name authors', error);
@@ -77,5 +80,7 @@ authorRoutes.patch('/author/:authorId', async (req, res) => {
   }
 });
 // {newName: 'James bk1'}
+
+// PATCH /api/author/add-book/:authorId - prideda viena knyga i autoriaus kurios id === authorId bookId masyva
 
 module.exports = authorRoutes;
