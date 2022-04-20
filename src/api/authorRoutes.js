@@ -54,4 +54,28 @@ authorRoutes.get('/author', async (req, res) => {
 
 // GET /api/author/:authorId    gauti konkretu autoriu
 
+// PATCH /api/author/:authorId - atnaujinti varda
+authorRoutes.patch('/author/:authorId', async (req, res) => {
+  // updateOne({filterObj/query}, {$set: {name: 'James'}})
+  try {
+    const { authorId } = req.params;
+    const { newName } = req.body;
+    // prisijungti
+    await dbClient.connect();
+    // atlikti veiksma
+    console.log('connected');
+    // gauti visas knygas
+    const collection = dbClient.db('library').collection('authors');
+    const updateRezult = await collection.updateOne({}, {});
+    res.status(200).json(updateRezult);
+  } catch (error) {
+    console.error('error in updating author name authors', error);
+    res.status(500).json('something is wrong');
+  } finally {
+    // uzdaryti prisijungima
+    await dbClient.close();
+  }
+});
+// {newName: 'James bk1'}
+
 module.exports = authorRoutes;

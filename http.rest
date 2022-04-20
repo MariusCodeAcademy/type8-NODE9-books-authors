@@ -32,6 +32,15 @@ Content-Type: application/json
 
 ###
 
+PATCH  http://localhost:3000/api/author/625e6f363682344933687559
+Content-Type: application/json
+
+{
+  "newName": "James bk1"
+}
+
+###
+
 GET http://localhost:3000/api/author
 ###
 
